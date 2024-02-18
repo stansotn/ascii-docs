@@ -1,0 +1,35 @@
+{
+  "rules": {
+    "trees": {
+      "$user_id": {
+        // User file tree grows here.
+        ".read": "$user_id === auth.uid && auth.token.email_verified === true",
+        ".write": "$user_id === auth.uid && auth.token.email_verified === true",
+        "$file_id": {".validate": "newData.isString()"}
+      }
+    },
+    "files": {
+      "$file_id": {
+        "name": {
+          // Only owner can change the name.
+          ".validate": "newData.isString()",
+          ".write": "data.parent().child('owner').val() === auth.token.email && auth.token.email_verified === true"
+        },
+        "owner": { 
+          // Only cloud function can set the owner.
+          ".validate": "newData.isString()"
+        },
+        "members": {
+          // Only cloud function can set and remove members.
+          "$user_id": {".validate": "newData.isString()"},
+        },
+        "content": {
+          // Only members can write the content.
+          ".write": "data.parent().child('members').child(auth.uid).val() === auth.token.email && auth.token.email_verified === true",
+        },
+        // Only members can read the content and metadata.
+        ".read": "data.child('members').child(auth.uid).val() === auth.token.email && auth.token.email_verified === true",
+      }
+    }
+  }
+}

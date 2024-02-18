@@ -1,0 +1,19 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Node environemnt
+node_modules/
+
+# Editor directories and files
+.idea
+*.tsbuildinfo
+
+# Build products
+ascii-docs-ui/dist
+
+# OS Sepcific
+.DS_Store
+
