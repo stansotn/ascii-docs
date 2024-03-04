@@ -17,3 +17,6 @@ ascii-docs-ui/dist
 # OS Sepcific
 .DS_Store
 
+# Emulator data
+firebase-export-metadata
+
